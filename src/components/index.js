@@ -6,6 +6,8 @@ export { default as Profile } from './Profile/Profile.jsx';
 export { default as Sidebar } from './Sidebar/Sidebar.jsx';
 export { default as MovieList } from './MovieList/MovieList.jsx';
 export { default as Movie } from './Movie/Movie.jsx';
+export { default as Search } from './Search/Search.jsx';
+
 
 
 
