@@ -15,6 +15,17 @@ const MovieInformation = () => {
   const { data, isFetching, error} = useGetMovieQuery(id)
   const classes = useStyles()
   const dispatch = useDispatch()
+  const isMovieFavorited = true
+  const isMovieWatchlisted = true
+
+
+  const addToFavorites = () => {
+
+  }
+
+  const addToWatchlist = () => {
+    
+  }
 
   if(isFetching){
     return (
@@ -73,6 +84,56 @@ const MovieInformation = () => {
                 </Typography>
               </Link>
             ))}
+          </Grid>
+          <Typography variant='h5' gutterBottom style={{ marginTop: '10px' }}>
+            Overview                
+          </Typography>
+          <Typography style={{ marginBottom: '2rem'}}>
+              {data?.overview}
+          </Typography>
+          <Typography variant="h5" gutterBottom>
+              Top Cast
+          </Typography>
+          <Grid item container spacing={2}>
+              {data && data.credits.cast.map((charachter, i) => (
+                charachter.profile_path && (
+                <Grid key={i} item xs={4} md={2} component={Link} to={`/actors/${charachter.id}`} style={{ textDecoration: 'none'}}>
+                  <img className={classes.castImage} src={`https://image.tmdb.org/t/p/w500/${charachter.profile_path}`} alt={charachter.name} />
+                  <Typography color="textPrimary">
+                    {charachter?.name}
+                  </Typography>
+                  <Typography color="textSecondary">
+                     {/* {charachter.charachter.split('/')[0]}  */}
+                  </Typography>
+                </Grid>
+              ))).splice(0, 6)}
+          </Grid>
+          <Grid item container style={{ marginTop: '2rem'}}>
+                  <div className={classes.buttonsContainer}>
+                    <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
+                      <ButtonGroup size='medium' variant='outlined'>
+                        <Button target="_blank" rel="noopener noreferrer" href={data?.homepage} endIcon={<Language />}> Website </Button>
+                        <Button target="_blank" rel="noopener noreferrer" href={`https://www.imdb.com/title/${data?.imdb_id}`} endIcon={<MovieIcon />}> IMDB </Button>
+                        <Button onClick={() => {}} href="#" endIcon={<Theaters />}> Trailer </Button>
+                      </ButtonGroup>
+                    </Grid>
+                    <Grid item xs={12} sm={6} className={classes.buttonsContainer}>
+                      <ButtonGroup size='medium' variant='outlined'>
+                        <Button onClick={addToFavorites} endIcon={isMovieFavorited ? <FavoriteBorderOutlined /> : <Favorite />}>
+                          {isMovieFavorited ? 'Unfavorite' : 'Favorite'}
+                        </Button>
+                        <Button onClick={addToWatchlist} endIcon={isMovieWatchlisted ? <Remove /> : <PlusOne />}>
+                          {/* {isMovieWatchlisted ? 'Remove From Watchlist' : 'Add To Watchlist'} */}
+                          WatchList
+                        </Button>
+                        <Button endIcon={<ArrowBack />} sx={{borderColor: 'primary.main'}}>
+                          <Typography  component={Link} to='/' color='inherit' variant='subtitle2' style={{ textDecoration: 'none'}}>
+                            Back
+                          </Typography>
+                        </Button>
+                      </ButtonGroup>
+                    </Grid>
+                  </div>
           </Grid>
         </Grid>
       </Grid>
